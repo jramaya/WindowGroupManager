@@ -1,8 +1,11 @@
 ; CommonUtils.ahk
 CenterMouse(hwnd) {
     x := y := w := h := 0
+    prevCoordMode := CoordMode("Mouse")
+    CoordMode("Mouse", "Screen")
     WinGetPos(&x, &y, &w, &h, hwnd)
     MouseMove(x + w // 2, y + h // 2, 0)
+    CoordMode("Mouse", prevCoordMode)
 }
 
 HandleGroup(groupName, exePath) {
