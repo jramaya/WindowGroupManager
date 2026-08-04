@@ -8,7 +8,6 @@ global LastActive := Map() ; Stores the last active window for each group.
 global LastGroup := "" ; Stores the last group that was used.
 global configFile
 
-
 allSections := IniRead(configFile)
 
 Loop parse allSections, "`n"

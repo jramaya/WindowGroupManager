@@ -13,6 +13,7 @@ Beyond window management, this project includes several quality-of-life enhancem
 *   **Run as Administrator:** Quickly launch a terminal or File Explorer with elevated privileges.
 *   **Enhanced CapsLock:** Transform your rarely-used `CapsLock` key into an additional `Ctrl` key.
 *   **Shortcut Override:** Disable default Windows shortcuts (like `Win+E`) to free them up for your custom actions.
+*   **System Panel Mouse Positioning:** Keep the native `Win+A` quick settings panel and Start menu behavior while moving the cursor to the active panel.
 
 ## Key Features
 

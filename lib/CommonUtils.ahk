@@ -1,4 +1,7 @@
 ; CommonUtils.ahk
+global WinABeforeWindow := 0
+global WinKeyComboTriggered := false
+
 CenterMouse(hwnd) {
     x := y := w := h := 0
     prevCoordMode := CoordMode("Mouse")
@@ -13,12 +16,14 @@ HandleGroup(groupName, exePath) {
 
     ids := WinGetList("ahk_group " groupName)
     if ids.Length = 0 {
+        WinABeforeWindow := WinExist("A")
         try {
             Run(exePath)
         } catch Error as e {
             MsgBox("❌ Could not launch " exePath ".`n`nError: " e.Message, "Launch Failed", 48)
             return
         }
+        StartMouseFollowActiveWindow(groupName, 120)
         WindowGroupIndex[groupName] := 1
         LastGroup := groupName
         return
@@ -43,8 +48,9 @@ RestoreLastActiveWindow(groupName) {
 
     try {
         if LastActive.Has(groupName) && WinExist("ahk_id " LastActive[groupName]) {
+            WinABeforeWindow := WinExist("A")
             WinActivate("ahk_id " LastActive[groupName])
-            CenterMouse(LastActive[groupName])
+            StartMouseFollowActiveWindow("Restaurando " groupName, 80)
             return true
         }
     } catch Error as e {
@@ -67,11 +73,43 @@ CycleThroughWindows(groupName, ids, active) {
         WindowGroupIndex[groupName] += 1
 
         if id != active {
+            WinABeforeWindow := active
             WinActivate(id)
-            CenterMouse(id)
+            StartMouseFollowActiveWindow("Cambiando " groupName, 80)
             LastActive[groupName] := id
             LastGroup := groupName
             return
         }
     }
+}
+
+StartSystemPanelTrigger(label, delay) {
+    WinABeforeWindow := WinExist("A")
+    StartMouseFollowActiveWindow(label, delay)
+}
+
+StartMouseFollowActiveWindow(label, delay := 100) {
+    ;ToolTip(label ": trigger detectado",,,20)
+    ;SetTimer(() => ToolTip(,,,20), -1200)
+    SetTimer(MoveMouseToSystemPanel, -delay)
+}
+
+MoveMouseToSystemPanel() {
+    global WinABeforeWindow
+
+    Loop 20 {
+        activeWindow := WinExist("A")
+        if activeWindow && activeWindow != WinABeforeWindow {
+            try {
+                CenterMouse(activeWindow)
+                return
+            } catch {
+                ; Continue polling until a valid active window is found.
+            }
+        }
+        Sleep(30)
+    }
+
+    ;ToolTip("No se encontro la ventana activa",,,20)
+    ;SetTimer(() => ToolTip(,,,20), -2000)
 }
