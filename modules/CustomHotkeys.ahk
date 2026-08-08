@@ -3,10 +3,24 @@
 
 ; --- Custom Hotkeys ---
 
-; win+h behaves like the Backspace key.
-#h::Send "{Backspace}"
-#m::Send "{Enter}"
-#c::Send "{Escape}"
+#h:: {
+    ; Mark that a Win+key combo was triggered so LWin Up won't treat this as a lone Win press
+    global WinKeyComboTriggered
+    WinKeyComboTriggered := true
+    Send "{Backspace}"
+}
+
+#m:: {
+    global WinKeyComboTriggered
+    WinKeyComboTriggered := true
+    Send "{Enter}"
+}
+
+#c:: {
+    global WinKeyComboTriggered
+    WinKeyComboTriggered := true
+    Send "{Escape}"
+}
 
 ~LWin:: {
 	global WinKeyComboTriggered
