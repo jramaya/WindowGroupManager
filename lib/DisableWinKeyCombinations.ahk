@@ -19,3 +19,6 @@
 ; Disable Win+Shift+T (Restore last window)
 #+t::Return
 #InputLevel 0
+
+; Disable Win+B (Tray / Show hidden icons) - handled by our script to reposition cursor and open chevron
+ #b::Return

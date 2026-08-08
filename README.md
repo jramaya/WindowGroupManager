@@ -23,6 +23,7 @@ Beyond window management, this project includes several quality-of-life enhancem
 *   ⚙️ **Highly Configurable:** No need to edit the source code. All window groups and hotkeys are managed through the `config.ini` file.
 *   ✨ **Custom Hotkeys:** A simple module to add your own personal hotkeys for common actions.
 *   ⛔ **Disable Native Shortcuts:** Reclaim valuable `Win+` key combinations for your own productivity scripts.
+*   🧭 **Win+B Tray Helper (Windows 11):** Pressing `Win+B` will open the notification area and the script will automatically move the mouse over the tray chevron / hidden icons area and expand it for easy access. The handler replicates native behavior while nudging the cursor into the correct position so you can click icons immediately.
 
 ## Getting Started
 
@@ -65,3 +66,7 @@ Hotkey=#k
     *   `!` = Alt
     *   `+` = Shift
     *   Example: `Hotkey=#s` means `Win + S`.
+
+Additional system hotkey behavior
+
+* Win+B (Windows 11): The project includes a Win+B wrapper that opens the notification area (native `Win+B`), sends a short confirm keystroke to ensure the panel activates, and recenters the mouse over the active panel so the chevron/hidden icons are ready to click. If you prefer the native behavior without the wrapper, remove or comment the `#b::Return` entry in `lib/DisableWinKeyCombinations.ahk`.
