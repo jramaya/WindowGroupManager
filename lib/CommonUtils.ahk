@@ -1,9 +1,9 @@
 ; CommonUtils.ahk
 global WinABeforeWindow := 0
-global WinKeyComboTriggered := false
 
 CenterMouse(hwnd) {
     x := y := w := h := 0
+    ; Save and restore previous CoordMode for Mouse
     prevCoordMode := CoordMode("Mouse")
     CoordMode("Mouse", "Screen")
     WinGetPos(&x, &y, &w, &h, hwnd)
@@ -23,7 +23,7 @@ HandleGroup(groupName, exePath) {
             MsgBox("❌ Could not launch " exePath ".`n`nError: " e.Message, "Launch Failed", 48)
             return
         }
-        StartMouseFollowActiveWindow(groupName, 120)
+        MouseFollowActiveWindow(groupName, 120)
         WindowGroupIndex[groupName] := 1
         LastGroup := groupName
         return
@@ -50,7 +50,7 @@ RestoreLastActiveWindow(groupName) {
         if LastActive.Has(groupName) && WinExist("ahk_id " LastActive[groupName]) {
             WinABeforeWindow := WinExist("A")
             WinActivate("ahk_id " LastActive[groupName])
-            StartMouseFollowActiveWindow("Restaurando " groupName, 80)
+            MouseFollowActiveWindow("Restaurando " groupName, 80)
             return true
         }
     } catch Error as e {
@@ -75,7 +75,7 @@ CycleThroughWindows(groupName, ids, active) {
         if id != active {
             WinABeforeWindow := active
             WinActivate(id)
-            StartMouseFollowActiveWindow("Cambiando " groupName, 80)
+            MouseFollowActiveWindow("Cambiando " groupName, 80)
             LastActive[groupName] := id
             LastGroup := groupName
             return
@@ -85,16 +85,16 @@ CycleThroughWindows(groupName, ids, active) {
 
 StartSystemPanelTrigger(label, delay) {
     WinABeforeWindow := WinExist("A")
-    StartMouseFollowActiveWindow(label, delay)
+    MouseFollowActiveWindow(label, delay)
 }
 
-StartMouseFollowActiveWindow(label, delay := 100) {
+MouseFollowActiveWindow(label, delay := 100) {
     ;ToolTip(label ": trigger detectado",,,20)
     ;SetTimer(() => ToolTip(,,,20), -1200)
-    SetTimer(MoveMouseToSystemPanel, -delay)
+    SetTimer(MoveMouseToActive, -delay)
 }
 
-MoveMouseToSystemPanel() {
+MoveMouseToActive() {
     global WinABeforeWindow
 
     Loop 20 {

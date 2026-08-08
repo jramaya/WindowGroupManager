@@ -20,5 +20,5 @@ RunAdminCabinet() {
     ; run explorer.exe with admin privileges.
     WinABeforeWindow := WinExist("A")
     Run("*RunAs explorer.exe")
-    StartMouseFollowActiveWindow("Admin Explorer", 120)
+    MouseFollowActiveWindow("Admin Explorer", 120)
 }
