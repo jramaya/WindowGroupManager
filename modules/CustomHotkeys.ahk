@@ -42,16 +42,21 @@
 
 ; Win+B handler: move cursor to tray chevron and open hidden icons
 #b:: {
-    global WinKeyComboTriggered
+    global WinKeyComboTriggered, WinABeforeWindow, NewlyLaunchedPendingSelection
     WinKeyComboTriggered := true
-    ; Save previous active window and trigger mouse follow for the system panel.
-    WinABeforeWindow := WinExist("A")
-    MouseFollowActiveWindow("Win+B", 220)
+    ;for groupName in NewlyLaunchedPendingSelection
+    ;    NewlyLaunchedPendingSelection[groupName] := false
+    ;; Save previous active window and trigger mouse follow for the system panel.
+    ;WinABeforeWindow := WinExist("A")
+    ;MouseFollowActiveWindow("Win+B", 220)
 
-    ; Send native Win+B to open the notification area
+    ; Send native Win+B to open the notification area. We intentionally do
+    ; NOT send Enter here because previous attempts to auto-send Enter could
+    ; activate the wrong window depending on timing and focus.
     Send("#b")
 
-    ; After a short delay, send an Enter to ensure the panel is opened/activated (helps on some configurations)
-    Sleep(160)
-    Send("{Enter}")
+    ; TODO: implement a more reliable detection that the notification panel
+    ; is focused before sending Enter (e.g. reuse MoveMouseToActive's
+    ; polling and/or check shell process/class). For now, avoid sending Enter
+    ; to prevent accidental input in the active window.
 }
