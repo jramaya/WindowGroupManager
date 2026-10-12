@@ -5,6 +5,7 @@
 global WindowGroupIndex := Map() ; Stores the index of the active window for each group.
 global AppPaths := Map() ; Stores the executable path for each group.
 global LastActive := Map() ; Stores the last active window for each group.
+global NewlyLaunchedPendingSelection := Map() ; Tracks newly launched apps awaiting window selection.
 global LastGroup := "" ; Stores the last group that was used.
 global configFile
 
