@@ -6,6 +6,7 @@ SetTitleMatchMode("2")
 SendMode("Input") ; Can improve the speed and reliability of Send
 
 global configFile := A_ScriptDir . "\config.ini"
+global ShowTooltips := false ; Set to true to enable diagnostic and CapsLock tooltips.
 
 ; --- Included Modules ---
 
