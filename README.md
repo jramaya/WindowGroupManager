@@ -31,6 +31,8 @@ Beyond window management, this project includes several quality-of-life enhancem
 
 You must have AutoHotkey v2.0 or a newer version installed.
 
+Note: This project has been tested only on Windows 11. Other Windows versions may work but are not actively verified.
+
 ### Installation
 
 1.  Clone the repository to your local machine:
@@ -40,6 +42,25 @@ You must have AutoHotkey v2.0 or a newer version installed.
 2.  Navigate to the cloned directory.
 3.  Customize the `config.ini` file to define your own application groups and hotkeys (see Configuration section below).
 4.  Run `init.ahk` to start the script.
+
+### Using the example configuration
+
+This repository includes a template `config.example.ini` you can copy and customize. Recommended steps:
+
+- Copy the example to create a local `config.ini` (do not commit your personal `config.ini`):
+
+  - PowerShell:
+    ```powershell
+    Copy-Item -Path config.example.ini -Destination config.ini
+    ```
+
+  - Bash / Git shell:
+    ```bash
+    cp config.example.ini config.ini
+    ```
+
+- Edit `config.ini` to match the executable names and hotkeys on your machine.
+- Start the script with `init.ahk` (or compile `init.ahk` into an EXE). The script looks for `config.ini` in the same directory as the running script/executable.
 
 ## Configuration
 
@@ -70,3 +91,4 @@ Hotkey=#k
 Additional system hotkey behavior
 
 * Win+B (Windows 11): The project includes a Win+B wrapper that opens the notification area (native `Win+B`), sends a short confirm keystroke to ensure the panel activates, and recenters the mouse over the active panel so the chevron/hidden icons are ready to click. If you prefer the native behavior without the wrapper, remove or comment the `#b::Return` entry in `lib/DisableWinKeyCombinations.ahk`.
+ 
