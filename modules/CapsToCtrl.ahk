@@ -3,6 +3,7 @@
 ; Completely blocks CapsLock and turns it into Left Ctrl
 $*CapsLock::
 {
+    global ShowTooltips
     local holdThreshold := 2000  ; 2 seconds
     local pressTime := A_TickCount
 
@@ -12,7 +13,7 @@ $*CapsLock::
     Send("{Ctrl up}")
 
     local heldTime := A_TickCount - pressTime
-    if (heldTime >= holdThreshold) {
+    if (heldTime >= holdThreshold && ShowTooltips) {
         ToolTip("To toggle caps lock: Ctrl + PrintScreen")
         SetTimer(() => ToolTip(), -3000)
     }
